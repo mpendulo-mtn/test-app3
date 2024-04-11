@@ -1,0 +1,51 @@
+name: 'Dependabot CI'
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-dependabot:
+    name: 'Test Dependabot PR'
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up node
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 20
+          cache: 'npm'
+          scope: '@mtnkente'
+          registry-url: https://npm.pkg.github.com/
+          always-auth: true
+
+      - name: Install dependencies
+        run: npm install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+
+      - name: Check format
+        run: npm run format:check
+
+      - name: Check lint
+        run: npm run lint:check
+
+      - name: Build CLI
+        run: npm run build
+
+  auto-merge:
+    name: 'Auto-merge Dependabot changes'
+    runs-on: ubuntu-latest
+    needs: check-dependabot
+    steps:
+      - uses: actions/checkout@v4.1.1
+      - name: Automatically merge dependabot upgrades
+        uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
