@@ -1,0 +1,19 @@
+name: Validate ADO Task number
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+jobs:
+  check_pr:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    steps:
+      - name: Check PR
+        uses: JJ/github-pr-contains-action@releases/v14
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          bodyContains: 'AB#'
+          waivedUsers: 'dependabot[bot]'
