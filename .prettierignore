@@ -1,0 +1,15 @@
+.aws-sam
+.cache
+.vscode
+*.iml
+cdk.out
+coverage
+tsconfig.json
+**/compiled
+
+# automatic generated changelogs
+CHANGELOG.md
+
+# Lighthouse reports
+.lighthouseci
+.lighthouseci/
