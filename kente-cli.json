@@ -1,0 +1,22 @@
+{
+  "_pleaseNote": "Auto generated file for future use. Please do not edit",
+  "project": {
+    "name": "test-app3",
+    "description": "carousel app for mtn",
+    "title": "",
+    "author": "MTN Kente",
+    "adoTaskNumber": "ADs-201",
+    "features": {
+      "registeredInAppStore": false,
+      "semanticRelease": false,
+      "repoName": "test-app3"
+    },
+    "template": "fa-template"
+  },
+  "runtime": {
+    "cli": "1.0.0",
+    "node": "v20.11.1",
+    "path": "test-app3"
+  },
+  "version": "1.0.0"
+}
